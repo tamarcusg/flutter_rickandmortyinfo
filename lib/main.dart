@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final theme = ThemeData(
-  useMaterial3: true,
+final _theme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.dark,
     seedColor: const Color.fromARGB(255, 151, 206, 76),
+  ),
+  textTheme: GoogleFonts.latoTextTheme(),
+);
+
+final _darkTheme = ThemeData(
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: const Color.fromARGB(255, 151, 206, 76),
+    brightness: Brightness.dark,
   ),
   textTheme: GoogleFonts.latoTextTheme(),
 );
@@ -21,7 +27,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: theme,
+      theme: _theme,
+      darkTheme: _darkTheme,
       home: const Text('Hello World!')
     );
   }
