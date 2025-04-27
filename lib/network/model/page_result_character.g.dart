@@ -13,7 +13,9 @@ PageResultCharacter _$PageResultCharacterFromJson(Map<String, dynamic> json) =>
       image: json['image'] as String,
       species: json['species'] as String,
       status: json['status'] as String,
-      origin: json['origin'] as String,
+      origin: PageResultCharacterOrigin.fromJson(
+        json['origin'] as Map<String, dynamic>,
+      ),
       type: json['type'] as String?,
       createdDate: json['created'] as String,
     );
@@ -30,3 +32,11 @@ Map<String, dynamic> _$PageResultCharacterToJson(
   'type': instance.type,
   'created': instance.createdDate,
 };
+
+PageResultCharacterOrigin _$PageResultCharacterOriginFromJson(
+  Map<String, dynamic> json,
+) => PageResultCharacterOrigin(name: json['name'] as String);
+
+Map<String, dynamic> _$PageResultCharacterOriginToJson(
+  PageResultCharacterOrigin instance,
+) => <String, dynamic>{'name': instance.name};

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rickandmortyinfo/home/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,7 +30,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: _theme,
       darkTheme: _darkTheme,
-      home: const Text('Hello World!')
+      home: const HomeScreen()
     );
   }
 }
