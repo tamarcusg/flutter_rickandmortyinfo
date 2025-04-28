@@ -33,6 +33,7 @@ class HomeScreenViewModel extends ChangeNotifier implements BaseViewModel {
     await characterRepository.getCharacters().then((ApiResult result) {
       if (result.isSuccessful) {
         updateStatePageData(pageData: result.data as PageData);
+        notifyListeners();
       } else {
         _uiState.isLoading = false;
         notifyListeners();
@@ -45,7 +46,6 @@ class HomeScreenViewModel extends ChangeNotifier implements BaseViewModel {
     _uiState.resultCount = pageData.count;
     _uiState.nextPageUrl = pageData.nextPage;
     _uiState.isLoading = false;
-    notifyListeners();
   }
 }
 

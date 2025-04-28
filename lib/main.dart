@@ -3,6 +3,7 @@ import 'package:flutter_rickandmortyinfo/home/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 final _theme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: const Color.fromARGB(255, 151, 206, 76),
@@ -22,15 +23,15 @@ void main() {
   runApp(const ProviderScope(child: App()));
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       theme: _theme,
       darkTheme: _darkTheme,
-      home: const HomeScreen()
+      home: HomeScreen(),
     );
   }
 }
