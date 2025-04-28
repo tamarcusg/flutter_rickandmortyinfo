@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rickandmortyinfo/home/home_screen.dart';
+import 'package:flutter_rickandmortyinfo/provider/navigation_graph_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,10 +28,12 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
+    final navigationGraph = ref.read(navigationGraphProvider);
+    return MaterialApp.router(
       theme: _theme,
       darkTheme: _darkTheme,
-      home: HomeScreen(),
+      themeMode: ThemeMode.system,
+      routerConfig: navigationGraph.goRouter,
     );
   }
 }
