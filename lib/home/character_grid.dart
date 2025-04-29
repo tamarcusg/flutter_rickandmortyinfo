@@ -21,6 +21,12 @@ class _CharacterGridState extends ConsumerState<CharacterGrid> {
     Future.microtask(() {
       ref.read(homeScreenViewModelProvider).handleEvent(LoadCharacters());
     });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        ref.read(homeScreenViewModelProvider).handleEvent(LoadNextPage());
+      }
+    });
   }
 
   @override

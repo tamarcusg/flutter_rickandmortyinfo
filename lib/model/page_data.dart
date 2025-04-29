@@ -10,4 +10,16 @@ class PageData {
     this.nextPage,
     required this.characters,
   });
+
+  PageData copy({
+    int? count,
+    String? nextPage,
+    List<CharacterData>? characters,
+  }) {
+    return PageData(
+      count: count ?? this.count,
+      nextPage: nextPage ?? this.nextPage,
+      characters: characters ?? this.characters,
+    );
+  }
 }

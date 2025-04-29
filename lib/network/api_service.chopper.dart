@@ -30,17 +30,4 @@ final class _$ApiService extends ApiService {
     );
     return client.send<dynamic, dynamic>($request);
   }
-
-  @override
-  Future<Response<dynamic>> getPage({String? page}) {
-    final Uri $url = Uri.parse('/character');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-      parameters: $params,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
 }

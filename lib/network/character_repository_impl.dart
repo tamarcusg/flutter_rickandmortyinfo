@@ -21,7 +21,7 @@ class CharacterRepositoryImpl implements CharacterRepository {
   
   @override
   Future<ApiResult> getPage({required String pageUrl}) {
-    return apiService.getPage(page: pageUrl).then((response) {
+    return apiService.getPage(pageUrl: pageUrl).then((response) {
       if (response.isSuccessful) {
         final pageData = PageResult.fromJson(response.body).toPageData();
         return ApiResult(isSuccessful: true, data: pageData);

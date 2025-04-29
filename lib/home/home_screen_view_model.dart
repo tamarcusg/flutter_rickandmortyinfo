@@ -26,6 +26,7 @@ class HomeScreenViewModel extends ChangeNotifier implements BaseViewModel {
         _loadCharacters();
         break;
       case LoadNextPage():
+        _loadNextPage();
         break;
     }
   }
@@ -51,6 +52,27 @@ class HomeScreenViewModel extends ChangeNotifier implements BaseViewModel {
     await characterRepository.getCharacters().then((ApiResult result) {
       if (result.isSuccessful) {
         updateStatePageData(pageData: result.data as PageData);
+        notifyListeners();
+      } else {
+        _uiState.isLoading = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  void _loadNextPage() async {
+    if (_uiState.nextPageUrl == null) return;
+
+    _uiState.isLoading = true;
+    notifyListeners();
+
+    await characterRepository.getPage(pageUrl: _uiState.nextPageUrl!).then((ApiResult result) {
+      if (result.isSuccessful) {
+        var pageData = result.data as PageData;
+        pageData = pageData.copy(
+          characters: [..._uiState.characters, ...pageData.characters],
+        );
+        updateStatePageData(pageData: pageData);
         notifyListeners();
       } else {
         _uiState.isLoading = false;
