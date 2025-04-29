@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_rickandmortyinfo/home/home_screen_view_model.dart';
+import 'package:flutter_rickandmortyinfo/provider/home_screen_view_model_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RickAndMortySearchBar extends StatelessWidget {
-  final String searchString;
-  final Function(String) onSearchChanged;
-  final bool isEnabled;
+class RickAndMortySearchBar extends ConsumerStatefulWidget {
+  
+  const RickAndMortySearchBar({super.key});
 
-  RickAndMortySearchBar({
-    required this.searchString,
-    required this.onSearchChanged,
-    this.isEnabled = true,
-    super.key,
-  });
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _RickAndMortySearchBarState();
+}
 
+class _RickAndMortySearchBarState extends ConsumerState<RickAndMortySearchBar> {
   final TextEditingController _controller = TextEditingController();
 
   final FocusNode _focusNode = FocusNode();
 
   @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _controller.text = searchString;
-    _controller.selection = TextSelection.fromPosition(
-      TextPosition(offset: searchString.length),
-    );
-    _focusNode.requestFocus();
+    final viewModel = ref.watch(homeScreenViewModelProvider);
     return SearchBar(
       controller: _controller,
       focusNode: _focusNode,
@@ -37,12 +40,12 @@ class RickAndMortySearchBar extends StatelessWidget {
           icon: const Icon(Icons.clear),
           onPressed: () {
             _controller.clear();
-            onSearchChanged('');
+            viewModel.handleEvent(UpdateSearchString(''));
           },
         ),
       ],
       onChanged: (value) {
-        onSearchChanged(value);
+        viewModel.handleEvent(UpdateSearchString(value));
       },
     );
   }
