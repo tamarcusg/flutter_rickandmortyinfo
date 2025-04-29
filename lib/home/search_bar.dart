@@ -30,6 +30,7 @@ class _RickAndMortySearchBarState extends ConsumerState<RickAndMortySearchBar> {
     return SearchBar(
       controller: _controller,
       focusNode: _focusNode,
+      backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.surfaceBright),
       hintText: AppLocalizations.of(context)!.search_bar_hint,
       elevation: const WidgetStatePropertyAll(2),
       padding: const WidgetStatePropertyAll(

@@ -10,24 +10,42 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.home_screen_app_bar_title)),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: const RickAndMortySearchBar(),
+    return GestureDetector( //This closes the keyboard when tapping outside the text field
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.home_screen_app_bar_title),
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+          scrolledUnderElevation: 0.0,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 16),
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                child: Column(
+                  children: [
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 300),
+                        child: const RickAndMortySearchBar(),
+                      ),
+                    ),
+                    const SizedBox(height: 16)
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            const Divider(height: 1),
-            const CharacterGrid(),
-          ],
+              
+              const Divider(height: 1),
+              const CharacterGrid(),
+            ],
+          ),
         ),
       ),
     );
