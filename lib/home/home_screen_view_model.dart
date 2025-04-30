@@ -28,6 +28,8 @@ class HomeScreenViewModel extends ChangeNotifier implements BaseViewModel {
       case LoadNextPage():
         _loadNextPage();
         break;
+      default:
+        break;
     }
   }
 

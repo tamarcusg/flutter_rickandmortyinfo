@@ -57,8 +57,7 @@ class _CharacterGridState extends ConsumerState<CharacterGrid> {
                 characters
                     .map(
                       (character) => CharacterGridItem(
-                        imageUrl: character.imageUrl,
-                        name: character.name,
+                        characterData: character,
                       ),
                     )
                     .toList(),

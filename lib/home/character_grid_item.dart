@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rickandmortyinfo/details/detail_screen_view_model.dart';
+import 'package:flutter_rickandmortyinfo/model/character_data.dart';
 import 'package:flutter_rickandmortyinfo/navigation/routes.dart';
+import 'package:flutter_rickandmortyinfo/provider/detail_screen_view_model_provider.dart';
+import 'package:flutter_rickandmortyinfo/widgets/rick_and_morty_image.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:transparent_image/transparent_image.dart';
 
-class CharacterGridItem extends StatelessWidget {
-  final String imageUrl;
-  final String name;
+class CharacterGridItem extends ConsumerWidget {
+  final CharacterData characterData;
 
   const CharacterGridItem({
-    required this.imageUrl,
-    required this.name,
+    required this.characterData,
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.read(detailScreenViewModelProvider); 
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -22,13 +25,13 @@ class CharacterGridItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: () {
-          context.go(Routes.details.path); // Pass the character name to the details screen
+          viewModel.handleEvent(SetSelectedCharacter(characterData)); // Pass the character data to the view model
+          context.push(Routes.details.path); // Pass the character name to the details screen
         },
         child: Stack(
           children: [
-            FadeInImage(
-              placeholder: MemoryImage(kTransparentImage), 
-              image: NetworkImage(imageUrl),
+            RickAndMortyImage(
+              imageUrl: characterData.imageUrl,
               imageErrorBuilder: (context, error, stackTrace) {
                 return const SizedBox(
                   child: Icon(Icons.error),
@@ -47,7 +50,7 @@ class CharacterGridItem extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Text(
-                    name,
+                    characterData.name,
                     style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
