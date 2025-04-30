@@ -30,16 +30,19 @@ class CharacterGridItem extends ConsumerWidget {
         },
         child: Stack(
           children: [
-            RickAndMortyImage(
-              imageUrl: characterData.imageUrl,
-              imageErrorBuilder: (context, error, stackTrace) {
-                return const SizedBox(
-                  child: Icon(Icons.error),
-                );
-              },
-              fit: BoxFit.cover,
-              height: 180,
-              width: double.infinity,
+            Hero(
+              tag: characterData.id,
+              child: RickAndMortyImage(
+                imageUrl: characterData.imageUrl,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return const SizedBox(
+                    child: Icon(Icons.error),
+                  );
+                },
+                fit: BoxFit.cover,
+                height: 180,
+                width: double.infinity,
+              ),
             ),
             Positioned(
               bottom: 0,

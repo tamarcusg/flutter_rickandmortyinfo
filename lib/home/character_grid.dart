@@ -25,7 +25,7 @@ class _CharacterGridState extends ConsumerState<CharacterGrid> {
     });
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels >= (scrollController.position.maxScrollExtent - 200)) {
         viewModel.handleEvent(LoadNextPage());
       }
     });

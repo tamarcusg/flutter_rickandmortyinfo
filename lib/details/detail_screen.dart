@@ -3,6 +3,7 @@ import 'package:flutter_rickandmortyinfo/provider/detail_screen_view_model_provi
 import 'package:flutter_rickandmortyinfo/widgets/rick_and_morty_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailScreen extends ConsumerWidget {
   const DetailScreen({super.key});
@@ -16,7 +17,7 @@ class DetailScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '$title: ',
+                '$title:',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(value),
@@ -33,6 +34,7 @@ class DetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final detailScreenViewModel = ref.read(detailScreenViewModelProvider);
     final selectedCharacter = detailScreenViewModel.uiState.selectedCharacter;
+    final l10n = AppLocalizations.of(context)!;
 
     if (selectedCharacter == null) {
       return Scaffold(
@@ -43,11 +45,10 @@ class DetailScreen extends ConsumerWidget {
               context.pop();
             },
           ),
-          title: const Text('Error'),
           backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
           scrolledUnderElevation: 0.0,
         ),
-        body: const Center(child: Text('No character selected')),
+        body: Center(child: Text(l10n.detail_screen_error_message)),
       );
     }
 
@@ -68,25 +69,28 @@ class DetailScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RickAndMortyImage(
-              imageUrl: selectedCharacter.imageUrl,
-              imageErrorBuilder: (context, error, stackTrace) {
-                return const SizedBox(child: Icon(Icons.error));
-              },
-              fit: BoxFit.cover,
-              height: 400,
-              width: double.infinity,
+            Hero(
+              tag: selectedCharacter.id,
+              child: RickAndMortyImage(
+                imageUrl: selectedCharacter.imageUrl,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return const SizedBox(child: Icon(Icons.error));
+                },
+                fit: BoxFit.cover,
+                height: 400,
+                width: double.infinity,
+              ),
             ),
             const SizedBox(height: 16),
-            _detailRow(title: 'Species', value: selectedCharacter.species),
-            _detailRow(title: 'Status', value: selectedCharacter.status),
-            _detailRow(title: 'Origin', value: selectedCharacter.origin),
+            _detailRow(title: l10n.species_title, value: selectedCharacter.species),
+            _detailRow(title: l10n.status_title, value: selectedCharacter.status),
+            _detailRow(title: l10n.origin_title, value: selectedCharacter.origin),
             if (selectedCharacter.type != null &&
                 selectedCharacter.type!.trim().isNotEmpty)
-              _detailRow(title: 'Type', value: selectedCharacter.type!),
+              _detailRow(title: l10n.type_title, value: selectedCharacter.type!),
 
             _detailRow(
-              title: 'Created',
+              title: l10n.date_created_title,
               value: selectedCharacter.formattedDate,
             ),
           ],

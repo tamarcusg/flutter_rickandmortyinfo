@@ -1,5 +1,11 @@
 {
   "@@locale": "en",
   "home_screen_app_bar_title": "Rick and Morty Info" ,
-  "search_bar_hint": "Search Characters..."
+  "search_bar_hint": "Search Characters...",
+  "detail_screen_error_message": "No character selected",
+  "species_title": "Species",
+  "status_title": "Status",
+  "origin_title": "Origin",
+  "type_title": "Type",
+  "date_created_title": "Date Created"
 }
