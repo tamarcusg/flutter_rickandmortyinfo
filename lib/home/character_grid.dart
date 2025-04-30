@@ -12,27 +12,23 @@ class CharacterGrid extends ConsumerStatefulWidget {
 }
 
 class _CharacterGridState extends ConsumerState<CharacterGrid> {
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    
+    final viewModel = ref.read(homeScreenViewModelProvider);
+    ScrollController scrollController = viewModel.scrollController;
 
     Future.microtask(() {
-      ref.read(homeScreenViewModelProvider).handleEvent(LoadCharacters());
+      viewModel.handleEvent(LoadCharacters());
     });
 
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        ref.read(homeScreenViewModelProvider).handleEvent(LoadNextPage());
+    scrollController.addListener(() {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        viewModel.handleEvent(LoadNextPage());
       }
     });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -44,7 +40,7 @@ class _CharacterGridState extends ConsumerState<CharacterGrid> {
       child: Stack(
         children: [
           GridView(
-            controller: _scrollController,
+            controller: viewModel.scrollController,
             padding: const EdgeInsets.all(24),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,

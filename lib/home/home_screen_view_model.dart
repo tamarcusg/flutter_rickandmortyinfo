@@ -16,6 +16,8 @@ class HomeScreenViewModel extends ChangeNotifier implements BaseViewModel {
 
   final _debouncer = Debouncer(delay: const Duration(milliseconds: 500));
 
+  ScrollController get scrollController => _uiState.scrollController;
+
   @override
   void handleEvent(ScreenEvent event) {
     switch (event) {
@@ -32,12 +34,18 @@ class HomeScreenViewModel extends ChangeNotifier implements BaseViewModel {
         break;
     }
   }
+  
+  @override
+  void dispose() {
+    _uiState.scrollController.dispose();
+    super.dispose();
+  }
 
   void _searchCharacters(String searchString) async {
     _uiState.searchString = searchString;
-
     await characterRepository.getCharacters(searchString: searchString).then((ApiResult result) {
       if (result.isSuccessful) {
+        _uiState.scrollController.jumpTo(0);
         updateStatePageData(pageData: result.data as PageData);
         notifyListeners();
       } else {
@@ -108,6 +116,7 @@ class HomeScreenUIState extends UiState {
   String? nextPageUrl;
   int resultCount;
   bool disableSearchBar;
+  final ScrollController scrollController = ScrollController();
 
   HomeScreenUIState({
     this.searchString = "",
