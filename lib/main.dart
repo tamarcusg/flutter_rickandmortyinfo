@@ -7,7 +7,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 final _theme = ThemeData(
-  useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     seedColor: const Color.fromARGB(255, 151, 206, 76),
   ),
@@ -15,12 +14,15 @@ final _theme = ThemeData(
 );
 
 final _darkTheme = ThemeData(
-  useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     seedColor: const Color.fromARGB(255, 151, 206, 76),
     brightness: Brightness.dark,
   ),
-  textTheme: GoogleFonts.latoTextTheme(),
+  textTheme: GoogleFonts.latoTextTheme().copyWith(
+    bodyLarge: const TextStyle(color: Colors.white),
+    bodyMedium: const TextStyle(color: Colors.white),
+    bodySmall: const TextStyle(color: Colors.white),
+  ),
 );
 
 void main() {
