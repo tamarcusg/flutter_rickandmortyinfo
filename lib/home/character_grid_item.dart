@@ -40,8 +40,6 @@ class CharacterGridItem extends ConsumerWidget {
                   );
                 },
                 fit: BoxFit.cover,
-                height: 180,
-                width: double.infinity,
               ),
             ),
             Positioned(

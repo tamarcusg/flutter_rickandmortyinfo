@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rickandmortyinfo/provider/detail_screen_view_model_provider.dart';
 import 'package:flutter_rickandmortyinfo/widgets/rick_and_morty_image.dart';
@@ -36,6 +38,9 @@ class DetailScreen extends ConsumerWidget {
     final selectedCharacter = detailScreenViewModel.uiState.selectedCharacter;
     final l10n = AppLocalizations.of(context)!;
 
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final imageDimen = math.min(deviceWidth, 500.0);
+
     if (selectedCharacter == null) {
       return Scaffold(
         appBar: AppBar(
@@ -66,8 +71,7 @@ class DetailScreen extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Hero(
               tag: selectedCharacter.id,
@@ -77,8 +81,8 @@ class DetailScreen extends ConsumerWidget {
                   return const SizedBox(child: Icon(Icons.error));
                 },
                 fit: BoxFit.cover,
-                height: 400,
-                width: double.infinity,
+                height: imageDimen,
+                width: imageDimen,
               ),
             ),
             const SizedBox(height: 16),

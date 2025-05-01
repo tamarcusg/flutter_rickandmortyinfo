@@ -42,8 +42,8 @@ class _CharacterGridState extends ConsumerState<CharacterGrid> {
           GridView(
             controller: viewModel.scrollController,
             padding: const EdgeInsets.all(24),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
               mainAxisSpacing: 12,
               crossAxisSpacing: 8,
               childAspectRatio: 0.7,
